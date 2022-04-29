@@ -132,17 +132,17 @@ export const getOwnerById = ((async (event) => {
  * Route: /api/pets/lost
  *
  **/
-export const getLostPets = ((async (event) => {
+export const getLostPets = ((async () => {
     // Initialize the DB
     let db = await init();
 
     // TODO: Finish implementation here
     const lostPets : string[] = [];
-    const ownerPetsQuery = db.prepare("SELECT pets.* FROM pets inner join owners_pets ON owners_pets.pet_id = pets.id where owners_pets.owner_id <=> ?;");
-    //const result = ownerPetsQuery.bind();
+    const lostPetsQuery = db.prepare("SELECT pets.* FROM pets inner join owners_pets ON owners_pets.pet_id = pets.id where owners_pets.owner_id = '';");
+    //const result = lostPetsQuery.bind();
     
-    while(ownerPetsQuery.step()) {
-        const row = ownerPetsQuery.getAsObject();
+    while(lostPetsQuery.step()) {
+        const row = lostPetsQuery.getAsObject();
         lostPets.push(row)
     return { statusCode: 200, body: JSON.stringify(lostPets) }
 
